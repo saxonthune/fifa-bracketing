@@ -182,3 +182,56 @@ glossary be the intent.
 A doc layer whose every entry points at a type is saying only what the code already
 says. The right structure was glossary + types from the start; the contract docs were
 ceremony that taxed every downstream change.
+
+---
+
+## 2026-06-27 — Fanning out before a user-controlled glossary made the whole effort a disaster
+
+**What happened:** The work fanned out — contract docs, types, tasks, multiple
+sessions — on top of an initial round of *silent naming decisions* the agent made.
+Those weak names (`Structure`, `Results`, `Provider`, a single `Bracket`) then had
+to be caught, renamed, and re-swept across every artifact that had already inherited
+them. The cumulative drag from naming alone made the effort a disaster: most of the
+churn above is renames and ref-sweeps, not feature work.
+
+**What I wanted:** Before any fan-out, build the glossary first and put it under my
+control — I commit to the names, the agent does not. A first pass of data-flow
+analysis (what types each surface starts with, how they flow through the pure
+functions, what each page receives) belongs at the same early stage, so the
+vocabulary is priced against the actual flow before anything serializes through it.
+Lock the glossary, *then* fan out.
+
+**DA principle cut against:** "Decide the *design rules* first." The glossary is the
+highest `fan-out × irreversibility` artifact — every doc, type, task, and session
+inherits it. Fanning out before it is locked guarantees the names congeal wrong and
+every downstream surface pays to rename them. The standing lesson: a user-controlled
+glossary (plus an initial data-flow pass) is a prerequisite to fan-out, not a thing
+to backfill once the blur bites.
+
+---
+
+## 2026-06-27 — Agent authored the process itself, and `decisions.md` became a trigger-happy mess
+
+**What happened:** I let the agent write `DA-PROCESS.MD` — the process that defines
+`decisions.md` / `tasks.md` and how they're structured. That was a disaster of the
+same kind as letting it author names and contracts: the agent set up its own rules,
+then followed them too eagerly. `decisions.md` is now a mess — the agent is far too
+trigger-happy, recording "decisions" that don't matter. When something was renamed
+wrong and then fixed, it logged that as a decision. A rename-and-revert carries no
+design weight; recording it is noise that buries the few decisions that do matter.
+
+**What I wanted:** Don't do this, and don't do it this way. The agent does not get to
+author the process artifact that governs what counts as a decision — that's mine to
+shape, like the glossary and the contracts. And `decisions.md` is for **load-bearing
+design rules only** — high `fan-out × irreversibility` choices. Not every change,
+correction, or rename. If a thing was decided wrong and then fixed, the log should
+show the *current* rule (or nothing), not a transcript of the wobble. The bar for an
+entry is "does this shape other work," not "did something change."
+
+**DA principle cut against:** "The human prices the load-bearing decisions; the agent
+executes downstream" — authoring the *process* is the most upstream decision of all,
+and the agent took it. And the bet — "never spend a human decision on something the
+agent could have safely assumed" runs both ways: a decision log stuffed with
+non-decisions spends my attention on noise every time I read it. `decisions.md` must
+record only the choices that shape other work, ruthlessly triaged, not a changelog of
+every edit and its undo.
