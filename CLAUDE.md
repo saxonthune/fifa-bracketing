@@ -54,6 +54,26 @@ three-part shape already used there (what happened / what I wanted / which DA
 principle it cut against) — transduce what I said, don't editorialize. Only that
 explicit trigger adds an entry.
 
+## Implementing work — todo-task, not the T- queue
+
+`da/tasks.md` (the `T-*` entries) is a **planning** artifact only — it tracks what's
+ready vs blocked and on which decision. It is **not** how work gets implemented.
+
+To implement, go through `/todo-task`: `create` a draft from the relevant `T-*`
+entry, `triage` it into an executable spec, then `execute` it as a headless agent.
+The `T-*` queue feeds todo-task creation; it is never executed directly.
+
+## Testing — sparse, pure functions only
+
+We do not want a large test suite. Tests are a cost under the clock, and most of
+this app is UI glue that a test would only pin in place. Write a test **only** for
+a pure function whose correctness isn't obvious by reading it — encode/decode
+round-trips, the scoring function, validation that must reject malformed input.
+Cover the contract (happy path + the failure modes that matter), not every branch.
+
+Do NOT add tests for components, pages, routing, or rendering. No snapshot tests.
+If a change doesn't touch a pure function, it ships without a new test.
+
 ## Headless agents
 
 Headless agents (`claude -p`) and non-Claude tools do not receive the Skill tool

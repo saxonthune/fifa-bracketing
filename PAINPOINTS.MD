@@ -42,3 +42,24 @@ committed one silently.
 **DA principle cut against:** "The human prices the few load-bearing decisions and
 the agent executes everything downstream." Naming a product surface is exactly such
 a decision. Propose-to-confirm, don't author.
+
+---
+
+## 2026-06-27 — Agent claimed a field belonged in a different contract than the one the human had just named
+
+**What happened:** The human said the share code should carry a `title` field
+(shown alongside the submitter name when a code is loaded). The agent replied that
+`title` "lives in the bracket schema (doc02.01), not the share-code contract,"
+offered to hand it off to another thread, and asked the human to confirm crossing
+that boundary — inventing an ownership constraint the human had not invoked and
+that contradicted what the human had just said.
+
+**What I wanted:** I raised `title` last turn *in the context of the share-code
+contract* — that is where it goes. A loaded code shows the submitter name and the
+title. There was nothing to relocate, defer, or hand off. The agent forced me to
+re-state a decision I had already made.
+
+**DA principle cut against:** The bet — "Never spend a human decision on something
+the agent could have safely assumed." The decision was already made and stated; the
+agent re-opened it by manufacturing a boundary rule, costing a correction instead of
+executing downstream of the human's call.
