@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+body {
+  @apply min-h-screen bg-white text-gray-900;
+}
+
+#root {
+  @apply mx-auto max-w-screen-sm px-4 py-6;
+}
