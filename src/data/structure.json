@@ -1,0 +1,208 @@
+{
+  "v": 1,
+  "_provisional": [
+    "all kickoff times are midnight-UTC placeholders; actual kickoff times unknown",
+    "R16/QF/SF/TP/F slot wiring derived from grid-column/grid-row positions in dump HTML; topology matches standard 48-team bracket shape",
+    "San Francisco venue has trailing whitespace in dump; cleaned to 'San Francisco'"
+  ],
+  "rounds": ["R32", "R16", "QF", "SF", "TP", "F"],
+  "matches": {
+    "R32-1":  {
+      "round": "R32",
+      "slots": ["A2", "B2"],
+      "feedsWinner": "R16-2",
+      "meta": { "num": 73, "venue": "Los Angeles",   "kickoff": "2026-06-28T00:00:00Z" }
+    },
+    "R32-2":  {
+      "round": "R32",
+      "slots": ["E1", "3rd:D"],
+      "feedsWinner": "R16-1",
+      "meta": { "num": 74, "venue": "Boston",        "kickoff": "2026-06-29T00:00:00Z" }
+    },
+    "R32-3":  {
+      "round": "R32",
+      "slots": ["F1", "C2"],
+      "feedsWinner": "R16-2",
+      "meta": { "num": 75, "venue": "Monterrey",     "kickoff": "2026-06-29T00:00:00Z" }
+    },
+    "R32-4":  {
+      "round": "R32",
+      "slots": ["C1", "F2"],
+      "feedsWinner": "R16-3",
+      "meta": { "num": 76, "venue": "Houston",       "kickoff": "2026-06-29T00:00:00Z" }
+    },
+    "R32-5":  {
+      "round": "R32",
+      "slots": ["I1", "3rd:F"],
+      "feedsWinner": "R16-1",
+      "meta": { "num": 77, "venue": "New York",      "kickoff": "2026-06-30T00:00:00Z" }
+    },
+    "R32-6":  {
+      "round": "R32",
+      "slots": ["E2", "I2"],
+      "feedsWinner": "R16-3",
+      "meta": { "num": 78, "venue": "Dallas",        "kickoff": "2026-06-30T00:00:00Z" }
+    },
+    "R32-7":  {
+      "round": "R32",
+      "slots": ["A1", "3rd:CE"],
+      "feedsWinner": "R16-4",
+      "meta": { "num": 79, "venue": "Mexico City",   "kickoff": "2026-06-30T00:00:00Z" }
+    },
+    "R32-8":  {
+      "round": "R32",
+      "slots": ["L1", "3rd:IJK"],
+      "feedsWinner": "R16-4",
+      "meta": { "num": 80, "venue": "Atlanta",       "kickoff": "2026-07-01T00:00:00Z" }
+    },
+    "R32-9":  {
+      "round": "R32",
+      "slots": ["D1", "3rd:B"],
+      "feedsWinner": "R16-6",
+      "meta": { "num": 81, "venue": "San Francisco", "kickoff": "2026-07-01T00:00:00Z" }
+    },
+    "R32-10": {
+      "round": "R32",
+      "slots": ["G1", "3rd:AIJ"],
+      "feedsWinner": "R16-6",
+      "meta": { "num": 82, "venue": "Seattle",       "kickoff": "2026-07-01T00:00:00Z" }
+    },
+    "R32-11": {
+      "round": "R32",
+      "slots": ["K2", "L2"],
+      "feedsWinner": "R16-5",
+      "meta": { "num": 83, "venue": "Toronto",       "kickoff": "2026-07-02T00:00:00Z" }
+    },
+    "R32-12": {
+      "round": "R32",
+      "slots": ["H1", "J2"],
+      "feedsWinner": "R16-5",
+      "meta": { "num": 84, "venue": "Los Angeles",   "kickoff": "2026-07-02T00:00:00Z" }
+    },
+    "R32-13": {
+      "round": "R32",
+      "slots": ["B1", "3rd:GJ"],
+      "feedsWinner": "R16-8",
+      "meta": { "num": 85, "venue": "Vancouver",     "kickoff": "2026-07-02T00:00:00Z" }
+    },
+    "R32-14": {
+      "round": "R32",
+      "slots": ["J1", "H2"],
+      "feedsWinner": "R16-7",
+      "meta": { "num": 86, "venue": "Miami",         "kickoff": "2026-07-03T00:00:00Z" }
+    },
+    "R32-15": {
+      "round": "R32",
+      "slots": ["K1", "3rd:EIL"],
+      "feedsWinner": "R16-8",
+      "meta": { "num": 87, "venue": "Kansas City",   "kickoff": "2026-07-03T00:00:00Z" }
+    },
+    "R32-16": {
+      "round": "R32",
+      "slots": ["D2", "G2"],
+      "feedsWinner": "R16-7",
+      "meta": { "num": 88, "venue": "Dallas",        "kickoff": "2026-07-03T00:00:00Z" }
+    },
+
+    "R16-1": {
+      "round": "R16",
+      "slots": ["W:R32-2", "W:R32-5"],
+      "feedsWinner": "QF-1",
+      "meta": { "num": 89, "venue": "Philadelphia",  "kickoff": "2026-07-04T00:00:00Z" }
+    },
+    "R16-2": {
+      "round": "R16",
+      "slots": ["W:R32-1", "W:R32-3"],
+      "feedsWinner": "QF-1",
+      "meta": { "num": 90, "venue": "Houston",       "kickoff": "2026-07-04T00:00:00Z" }
+    },
+    "R16-3": {
+      "round": "R16",
+      "slots": ["W:R32-4", "W:R32-6"],
+      "feedsWinner": "QF-3",
+      "meta": { "num": 91, "venue": "New York",      "kickoff": "2026-07-05T00:00:00Z" }
+    },
+    "R16-4": {
+      "round": "R16",
+      "slots": ["W:R32-7", "W:R32-8"],
+      "feedsWinner": "QF-3",
+      "meta": { "num": 92, "venue": "Mexico City",   "kickoff": "2026-07-05T00:00:00Z" }
+    },
+    "R16-5": {
+      "round": "R16",
+      "slots": ["W:R32-11", "W:R32-12"],
+      "feedsWinner": "QF-2",
+      "meta": { "num": 93, "venue": "Dallas",        "kickoff": "2026-07-06T00:00:00Z" }
+    },
+    "R16-6": {
+      "round": "R16",
+      "slots": ["W:R32-9", "W:R32-10"],
+      "feedsWinner": "QF-2",
+      "meta": { "num": 94, "venue": "Seattle",       "kickoff": "2026-07-06T00:00:00Z" }
+    },
+    "R16-7": {
+      "round": "R16",
+      "slots": ["W:R32-14", "W:R32-16"],
+      "feedsWinner": "QF-4",
+      "meta": { "num": 95, "venue": "Atlanta",       "kickoff": "2026-07-07T00:00:00Z" }
+    },
+    "R16-8": {
+      "round": "R16",
+      "slots": ["W:R32-13", "W:R32-15"],
+      "feedsWinner": "QF-4",
+      "meta": { "num": 96, "venue": "Vancouver",     "kickoff": "2026-07-07T00:00:00Z" }
+    },
+
+    "QF-1": {
+      "round": "QF",
+      "slots": ["W:R16-1", "W:R16-2"],
+      "feedsWinner": "SF-1",
+      "meta": { "num": 97, "venue": "Boston",        "kickoff": "2026-07-09T00:00:00Z" }
+    },
+    "QF-2": {
+      "round": "QF",
+      "slots": ["W:R16-5", "W:R16-6"],
+      "feedsWinner": "SF-1",
+      "meta": { "num": 98, "venue": "Los Angeles",   "kickoff": "2026-07-10T00:00:00Z" }
+    },
+    "QF-3": {
+      "round": "QF",
+      "slots": ["W:R16-3", "W:R16-4"],
+      "feedsWinner": "SF-2",
+      "meta": { "num": 99, "venue": "Miami",         "kickoff": "2026-07-11T00:00:00Z" }
+    },
+    "QF-4": {
+      "round": "QF",
+      "slots": ["W:R16-7", "W:R16-8"],
+      "feedsWinner": "SF-2",
+      "meta": { "num": 100, "venue": "Kansas City",  "kickoff": "2026-07-11T00:00:00Z" }
+    },
+
+    "SF-1": {
+      "round": "SF",
+      "slots": ["W:QF-1", "W:QF-2"],
+      "feedsWinner": "F-1",
+      "feedsLoser": "TP-1",
+      "meta": { "num": 101, "venue": "Dallas",       "kickoff": "2026-07-14T00:00:00Z" }
+    },
+    "SF-2": {
+      "round": "SF",
+      "slots": ["W:QF-3", "W:QF-4"],
+      "feedsWinner": "F-1",
+      "feedsLoser": "TP-1",
+      "meta": { "num": 102, "venue": "Atlanta",      "kickoff": "2026-07-15T00:00:00Z" }
+    },
+
+    "TP-1": {
+      "round": "TP",
+      "slots": ["L:SF-1", "L:SF-2"],
+      "meta": { "num": 103, "venue": "Miami",        "kickoff": "2026-07-18T00:00:00Z" }
+    },
+
+    "F-1": {
+      "round": "F",
+      "slots": ["W:SF-1", "W:SF-2"],
+      "meta": { "num": 104, "venue": "New York",     "kickoff": "2026-07-19T00:00:00Z" }
+    }
+  }
+}

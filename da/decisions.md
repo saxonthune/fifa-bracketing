@@ -11,7 +11,7 @@ records the choice and its status.
   fan_out: high
   reversible: false
   status: confirmed
-  choice: "structure (doc02.04) + results (doc02.02) + prediction (doc02.01), composited at render"
+  choice: "TournamentStructure + CurrentStandings + UserBracket (prediction), composited at render"
   confirmed_by: human
 
 - id: D-bracket-representation
@@ -96,8 +96,43 @@ records the choice and its status.
   decision: how a bracket serializes into a shareable code
   fan_out: high
   reversible: false
-  status: open
-  owner: thread-A (da/handoff-share-code.md -> doc02.03)
+  status: confirmed
+  choice: "tag~payload string; tag 1 = URL-safe base64 of bracket JSON (wordle-diy convention). Fail-safe decode (implemented in src/lib/shareCode.ts; picks-vs-structure validation is the caller's job). Tag is read before the payload so a future tighter encoding (tag 2) can be added without breaking circulating codes."
+  confirmed_by: thread-A
+  note: >
+    Carrier: the code travels two equivalent ways from one value — a bare string the
+    entrant pastes, or a `?b=<code>` query param that opens the Bracket Viewer
+    pre-decoded. The query value IS the bare code; neither form is canonical. (Not
+    yet built — forward note for T-builder / Bracket Viewer.)
+
+- id: D-render-model-shape
+  decision: does the resolver render model duplicate TournamentStructure (layout/meta/wiring) or stay content-only
+  fan_out: medium
+  reversible: true
+  status: confirmed
+  choice: "content-only — TournamentStatus/GradedBracket hold resolved slots/winner/pick/outcome keyed by MatchId; BracketDisplay takes (TournamentStructure, model). Mechanical: every model consumer already holds TournamentStructure and the model is never serialized, so copying it in is pure duplication (per D-types-canonical)."
+
+- id: D-vocabulary
+  decision: the shared domain vocabulary (names everything inherits)
+  fan_out: high
+  reversible: false
+  status: confirmed
+  choice: "TournamentStructure, CurrentStandings, UserBracket (picks), TournamentStatus (TournamentStructure+CurrentStandings, no picks, Tracker), GradedBracket (UserBracket graded vs TournamentStatus, Viewer/Pinned), resolver. See doc02 glossary."
+  confirmed_by: human
+
+- id: D-types-canonical
+  decision: source of truth for the serialized shapes
+  fan_out: high
+  reversible: true
+  status: confirmed
+  choice: "the contract is two surfaces only — src/lib/types.ts (field shapes, canonical) + da/decisions.md (rationale); doc02 glossary holds the names. The per-shape contract doc tree (old doc02.01–05) was deleted as redundant bloat (PAINPOINTS.MD 2026-06-27)."
+
+- id: D-bracket-title
+  decision: does a bracket carry a display title
+  fan_out: low
+  reversible: true
+  status: confirmed
+  choice: "yes — title lives on the bracket (owned by the bracket shape), serialized by the share code; reconciled via D-types-canonical"
 
 - id: D-scoring-rule
   decision: points per correct pick by round; third place; tiebreakers
@@ -134,5 +169,5 @@ records the choice and its status.
   fan_out: medium
   reversible: true
   status: confirmed
-  choice: "pinned.json in the R2 bucket = a flat array of code strings. Entrant name is carried inside each code (doc02.01 `entrant`), so no wrapper object. Decode each to get name + picks."
+  choice: "pinned.json in the R2 bucket = a flat array of code strings. Entrant name is carried inside each code (UserBracket.entrant), so no wrapper object. Decode each to get name + picks."
 ```

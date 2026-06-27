@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { decodeBracket, encodeBracket } from "./shareCode";
-import type { Bracket } from "./types";
+import type { UserBracket } from "./types";
 
-const sample: Bracket = {
+const sample: UserBracket = {
   v: 1,
   entrant: "Alice",
   title: "Alice's Bracket",

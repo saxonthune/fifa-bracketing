@@ -1,9 +1,9 @@
-import type { Bracket } from "./types";
+import type { UserBracket } from "./types";
 
 export const CURRENT_BRACKET_V = 1;
 
 export type DecodeResult =
-  | { ok: true; bracket: Bracket }
+  | { ok: true; bracket: UserBracket }
   | { ok: false; error: string };
 
 function b64Encode(str: string): string {
@@ -17,7 +17,7 @@ function b64Decode(str: string): string {
   return atob(repadded);
 }
 
-export function encodeBracket(bracket: Bracket): string {
+export function encodeBracket(bracket: UserBracket): string {
   return `1~${b64Encode(JSON.stringify(bracket))}`;
 }
 
@@ -76,6 +76,6 @@ export function decodeBracket(code: string): DecodeResult {
     return { ok: false, error: "unknown-version" };
   }
 
-  // Structure-validation (picks keys vs tournament structure) is the caller's job.
-  return { ok: true, bracket: parsed as Bracket };
+  // TournamentStructure-validation (picks keys vs tournament structure) is the caller's job.
+  return { ok: true, bracket: parsed as UserBracket };
 }

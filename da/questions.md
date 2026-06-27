@@ -12,6 +12,17 @@ become `confirmed` decisions in decisions.md.
 
 # --- OPEN ---
 
+- id: Q-scoring-needed
+  question: >
+    Does any surface show a bracket's numeric TOTAL score? The "standings"/
+    leaderboard that justified scoring was never requested and is now killed
+    (PAINPOINTS.MD 2026-06-27). Per-pick hit/miss already comes from the resolver
+    (GradedBracket.outcome). Agent lean: no total score — grading is enough. If
+    confirmed no, T-scoring-engine / D-scoring-rule / D-third-place's scoring half
+    are dead code to remove.
+  unblocks: [T-pinned-brackets, T-bracket-renderer]
+  priority: medium
+
 - id: Q-r2-url
   question: >
     What is the R2 bucket's public base URL (or custom domain), and the file names

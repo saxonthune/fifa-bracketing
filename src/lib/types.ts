@@ -1,6 +1,7 @@
-// Contract types — the serialized shapes the whole app shares.
-// Source of truth: .rhidoc/02-contracts (doc02.01 bracket, 02.02 results,
-// 02.03 share-code, 02.04 structure, 02.05 teams). Change the doc, then this.
+// Contract types — the canonical serialized shapes the whole app shares.
+// This file is the single source of truth for field shapes. Names live in the
+// glossary (.rhidoc/02-glossary.md); rationale lives in da/decisions.md (D-*).
+// Shape lives here; why lives there.
 
 // ─── Atoms ───────────────────────────────────────────────────────────────────
 
@@ -12,14 +13,14 @@ export type RoundId = (typeof ROUND_IDS)[number];
 export type MatchId = `${RoundId}-${number}`;
 
 /** FIFA three-letter code, e.g. "GER", "NED", "ENG". Deliberately not ISO
- *  (doc02.05). All scoring and cross-references run on this. */
+ *  (D-team-id). All scoring and cross-references run on this. */
 export type TeamCode = string;
 
 export type GroupLetter =
   | "A" | "B" | "C" | "D" | "E" | "F"
   | "G" | "H" | "I" | "J" | "K" | "L";
 
-// ─── Structure (doc02.04) — the static skeleton ──────────────────────────────
+// ─── TournamentStructure — the static skeleton ──────────────────────────────
 
 /** How a slot's occupant is determined, resolved against results at render. */
 export type GroupPositionRef = `${GroupLetter}${1 | 2}`; // A1 = winner, B2 = runner-up
@@ -29,7 +30,7 @@ export type LoserRef = `L:${MatchId}`;
 export type SlotRef = GroupPositionRef | BestThirdRef | WinnerRef | LoserRef;
 
 /** The slots reality fills directly at the R32 entry (later slots resolve
- *  from match outcomes). Used as the key set of Results.slots. */
+ *  from match outcomes). Used as the key set of CurrentStandings.slots. */
 export type EntrySlotRef = GroupPositionRef | BestThirdRef;
 
 export interface MatchMeta {
@@ -46,40 +47,43 @@ export interface Match {
   meta: MatchMeta;
 }
 
-export interface Structure {
+export interface TournamentStructure {
   v: number;
   rounds: RoundId[];
   matches: Record<MatchId, Match>;
 }
 
-// ─── Bracket (doc02.01) — one entrant's prediction ───────────────────────────
+// ─── UserBracket — one entrant's prediction ─────────────────────────────────
 
 /** Match id → predicted winning team. A partial fill (Builder in progress) is
  *  valid; missing keys are simply unpicked. */
 export type Picks = Record<MatchId, TeamCode>;
 
-export interface Bracket {
+export interface UserBracket {
   v: number;
   entrant: string;
-  /** Display title. Present in the share-code payload (doc02.03) but not yet in
-   *  doc02.01 — the two contracts disagree and need reconciling. Optional here
-   *  until that's resolved. */
+  /** Display title shown alongside entrant. Optional: an in-progress Builder
+   *  bracket need not have one yet. A decoded share code requires it (D-share-code). */
   title?: string;
   picks: Picks;
 }
 
-// ─── Results (doc02.02) — maintainer-pushed reality ──────────────────────────
+// ─── CurrentStandings — maintainer-pushed reality ───────────────────────────
 
-export interface Results {
+/** One thing reality has resolved: a ref and the team now occupying it. The ref
+ *  is either an entry slot (group position / best-third, fixing an R32 entrant)
+ *  or a match id (the decided winner of that match). The two key spaces are
+ *  disjoint, so entrants and winners share one list. */
+export type Resolution = [ref: EntrySlotRef | MatchId, team: TeamCode];
+
+export interface CurrentStandings {
   v: number;
-  /** Entry SlotRef → the team reality placed there (group positions and
-   *  best-third conditionals resolved). */
-  slots: Record<EntrySlotRef, TeamCode>;
-  /** Match id → actual winner, decided matches only. Absence = not yet played. */
-  winners: Record<MatchId, TeamCode>;
+  /** Entrants and decided winners as one flat list; a ref's absence = not yet
+   *  resolved. Build a `Map(resolved)` for lookup. */
+  resolved: Resolution[];
 }
 
-// ─── Team registry (doc02.05) ────────────────────────────────────────────────
+// ─── Team registry ──────────────────────────────────────────────────────────
 
 export interface Team {
   name: string;
@@ -92,8 +96,8 @@ export interface TeamRegistry {
   teams: Record<TeamCode, Team>;
 }
 
-// ─── Share code (doc02.03) ───────────────────────────────────────────────────
+// ─── Share code ─────────────────────────────────────────────────────────────
 
 /** The "tag~payload" string an entrant copies, e.g. "1~eyJ2Ijox…". Tag selects
- *  the encoding (1 = URL-safe base64 of bracket JSON); see doc02.03. */
+ *  the encoding (1 = URL-safe base64 of bracket JSON); see D-share-code. */
 export type ShareCode = string;
