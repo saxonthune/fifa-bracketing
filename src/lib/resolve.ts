@@ -5,17 +5,19 @@ import type {
   TeamCode,
   SlotRef,
   MatchId,
+  Picks,
 } from "./types";
 import type { ResolvedMatch, ResolvedSlot } from "./render-model";
 import { slotLabel } from "./slotLabel";
 
-export function resolveMatches(
+/** Resolve every match against a prebuilt `placed` map (ref/matchId → team).
+ *  The winner source is whatever populated `placed`: reality (CurrentStandings)
+ *  for the Tracker, or a UserBracket's picks for the Viewer/Builder. */
+function resolveWith(
   structure: TournamentStructure,
-  standings: CurrentStandings,
-  registry: TeamRegistry
+  registry: TeamRegistry,
+  placed: Map<string, TeamCode>
 ): ResolvedMatch[] {
-  const placed = new Map<string, TeamCode>(standings.resolved);
-
   function whoIs(ref: SlotRef): TeamCode | undefined {
     if (ref.startsWith("W:")) {
       const id = ref.slice(2) as MatchId;
@@ -40,8 +42,8 @@ export function resolveMatches(
   function resolveSlot(ref: SlotRef): ResolvedSlot {
     const code = whoIs(ref);
     if (code !== undefined && registry.teams[code]) {
-      const { name, flag } = registry.teams[code];
-      return { kind: "team", code, name, flag };
+      const { name, short, flag } = registry.teams[code];
+      return { kind: "team", code, name, short, flag };
     }
     return { kind: "pending", label: slotLabel(ref) };
   }
@@ -58,4 +60,32 @@ export function resolveMatches(
     if (winner !== undefined) result.winner = winner;
     return result;
   });
+}
+
+/** Tracker path: winners come from maintainer-pushed reality. */
+export function resolveMatches(
+  structure: TournamentStructure,
+  standings: CurrentStandings,
+  registry: TeamRegistry
+): ResolvedMatch[] {
+  return resolveWith(structure, registry, new Map(standings.resolved));
+}
+
+/** Viewer/Builder path: R32 entry slots come from reality (group results), but
+ *  every knockout winner comes from the entrant's predicted `picks`. Reality's
+ *  decided matches are deliberately ignored so the view shows the prediction. */
+export function resolveBracket(
+  structure: TournamentStructure,
+  standings: CurrentStandings,
+  registry: TeamRegistry,
+  picks: Picks
+): ResolvedMatch[] {
+  const placed = new Map<string, TeamCode>();
+  for (const [ref, team] of standings.resolved) {
+    if (!(ref in structure.matches)) placed.set(ref, team);
+  }
+  for (const [matchId, team] of Object.entries(picks)) {
+    placed.set(matchId, team);
+  }
+  return resolveWith(structure, registry, placed);
 }

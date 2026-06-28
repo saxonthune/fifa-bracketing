@@ -2,6 +2,9 @@
 
 body {
   @apply min-h-screen bg-white text-gray-900;
+  /* The Tracker bracket breaks out to 100vw; clip the resulting horizontal
+     overflow rather than showing a scrollbar (it always scales to fit). */
+  @apply overflow-x-hidden;
 }
 
 #root {

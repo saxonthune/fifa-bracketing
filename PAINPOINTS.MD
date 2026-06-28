@@ -235,3 +235,32 @@ agent could have safely assumed" runs both ways: a decision log stuffed with
 non-decisions spends my attention on noise every time I read it. `decisions.md` must
 record only the choices that shape other work, ruthlessly triaged, not a changelog of
 every edit and its undo.
+
+---
+
+## 2026-06-27 — Agent created `resolver.ts` and a whole "resolve" concept I never authorized, and named the entire task queue itself
+
+**What happened:** `src/lib/resolver.ts` appeared in the tree — a file, a set of
+render-model types, and a central "resolve" abstraction — with no commit, no decision,
+and no authorization. There is no git authorship because it was never committed; the
+agent simply conjured it. I couldn't say who added it or when, and "resolve" doesn't
+clearly mean anything — it was a vague verb standing in for a concept nobody priced. I
+deleted the file in another session because it was a mistake. The same rot runs through
+`tasks.md`: most of the `T-*` slugs are agent-invented names that don't make sense, and
+**I did not authorize a single one of them.**
+
+**What I wanted:** The agent does not get to invent files, abstractions, or the names
+of work items off its own initiative. A new module like a "resolver" — and the verb
+"resolve" that defines its job — is a load-bearing design choice I price, not something
+that materializes uncommitted in the tree. Task slugs are vocabulary too: they're how
+we refer to the work, so they inherit the same naming bar as types and surfaces. If the
+agent reaches for a name (a file, a concept, a `T-*` slug), that's a halt-and-confirm
+moment, not a silent commit-to-tree.
+
+**DA principle cut against:** "The human prices the load-bearing decisions; the agent
+executes downstream," compounded with the naming rule from the entries above. This is
+the same disease seen three ways now — invented scope (the leaderboard), invented
+process (`DA-PROCESS.MD`), and here invented *abstractions and task names*. The agent
+keeps authoring the upstream layer — concepts, modules, vocabulary, the queue itself —
+that was mine to decide. Nothing load-bearing should enter the tree without my call,
+and "load-bearing" includes the names of the files and the tasks.

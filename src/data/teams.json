@@ -1,15 +1,9 @@
 {
   "v": 1,
-  "_provisional": [
-    "KOR group=A: assigned A3 (3rd:AIJ covers A/I/J; A3 is one possibility)",
-    "ECU group=C: assigned C3 (3rd:CE covers C/E; C3 is one possibility)",
-    "SCO group=C: appears as 3rd:CE candidate in dump; assigned C provisionally (could be E)",
-    "GHA group=E: assigned E3 (3rd:EIL covers E/I/L; E3 is one possibility)",
-    "SEN group=I: assigned I3 (3rd:IJK covers I/J/K; I3 is one possibility)",
-    "IRN group=G: assigned G3 (3rd:GJ covers G/J; G3 is one possibility)",
-    "ALG group=J: appears as Group J runner-up candidate in dump; J provisional",
-    "DRC group=K: appears as Group K/L runner-up and 3rd:IJK candidate; K provisional",
-    "SCO flag=gb-sct: confirmed from dump img src"
+  "_note": [
+    "Groups and codes reflect the confirmed 2026 World Cup group-stage results.",
+    "New teams are appended in registry order, never inserted: share code v2 maps",
+    "each team to a char by its index here, so reordering would break saved codes."
   ],
   "teams": {
     "MEX": { "name": "Mexico",              "flag": "mx",     "group": "A" },
@@ -17,14 +11,14 @@
     "KOR": { "name": "South Korea",          "flag": "kr",     "group": "A" },
     "SUI": { "name": "Switzerland",          "flag": "ch",     "group": "B" },
     "CAN": { "name": "Canada",               "flag": "ca",     "group": "B" },
-    "BOS": { "name": "Bosnia and Herzegovina","flag": "ba",    "group": "B" },
+    "BOS": { "name": "Bosnia and Herzegovina", "short": "Bosnia & Herz.", "flag": "ba", "group": "B" },
     "BRA": { "name": "Brazil",               "flag": "br",     "group": "C" },
     "MAR": { "name": "Morocco",              "flag": "ma",     "group": "C" },
-    "ECU": { "name": "Ecuador",              "flag": "ec",     "group": "C" },
+    "ECU": { "name": "Ecuador",              "flag": "ec",     "group": "E" },
     "SCO": { "name": "Scotland",             "flag": "gb-sct", "group": "C" },
     "GER": { "name": "Germany",              "flag": "de",     "group": "E" },
     "CIV": { "name": "Ivory Coast",          "flag": "ci",     "group": "E" },
-    "GHA": { "name": "Ghana",               "flag": "gh",     "group": "E" },
+    "GHA": { "name": "Ghana",               "flag": "gh",     "group": "L" },
     "USA": { "name": "United States",        "flag": "us",     "group": "D" },
     "AUS": { "name": "Australia",            "flag": "au",     "group": "D" },
     "PAR": { "name": "Paraguay",             "flag": "py",     "group": "D" },
@@ -46,6 +40,19 @@
     "COL": { "name": "Colombia",           "flag": "co",     "group": "K" },
     "DRC": { "name": "D.R. Congo",         "flag": "cd",     "group": "K" },
     "ENG": { "name": "England",            "flag": "gb-eng", "group": "L" },
-    "CRO": { "name": "Croatia",            "flag": "hr",     "group": "L" }
+    "CRO": { "name": "Croatia",            "flag": "hr",     "group": "L" },
+    "CZE": { "name": "Czechia",            "flag": "cz",     "group": "A" },
+    "QAT": { "name": "Qatar",              "flag": "qa",     "group": "B" },
+    "HAI": { "name": "Haiti",              "flag": "ht",     "group": "C" },
+    "TUR": { "name": "Türkiye",            "flag": "tr",     "group": "D" },
+    "CUW": { "name": "Curaçao",            "flag": "cw",     "group": "E" },
+    "TUN": { "name": "Tunisia",            "flag": "tn",     "group": "F" },
+    "NZL": { "name": "New Zealand",        "flag": "nz",     "group": "G" },
+    "URU": { "name": "Uruguay",            "flag": "uy",     "group": "H" },
+    "KSA": { "name": "Saudi Arabia",       "flag": "sa",     "group": "H" },
+    "IRQ": { "name": "Iraq",               "flag": "iq",     "group": "I" },
+    "JOR": { "name": "Jordan",             "flag": "jo",     "group": "J" },
+    "UZB": { "name": "Uzbekistan",         "flag": "uz",     "group": "K" },
+    "PAN": { "name": "Panama",             "flag": "pa",     "group": "L" }
   }
 }

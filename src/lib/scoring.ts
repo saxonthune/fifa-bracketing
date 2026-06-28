@@ -6,15 +6,16 @@ import type {
   TeamCode,
 } from "./types";
 
-/** Points per correct pick by round (D-scoring-rule, Fibonacci). TP (third
- *  place) assumed = QF level pending a human call (D-scoring-rule note). */
+/** Points per correct pick by round (D-scoring-rule, doubling: each round worth
+ *  2× the previous, the de-facto standard). TP (third place) assumed = QF level
+ *  pending a human call (D-scoring-rule note). */
 export const ROUND_POINTS: Record<RoundId, number> = {
   R32: 1,
   R16: 2,
-  QF: 3,
-  SF: 5,
-  F: 8,
-  TP: 3,
+  QF: 4,
+  SF: 8,
+  F: 16,
+  TP: 4,
 };
 
 export type MatchOutcome = "correct" | "wrong" | "pending";

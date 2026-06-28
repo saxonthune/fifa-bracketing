@@ -87,6 +87,9 @@ export interface CurrentStandings {
 
 export interface Team {
   name: string;
+  /** Shorter label for names that won't fit a card on one line (e.g. Bosnia
+   *  and Herzegovina). Falls back to `name` when absent. */
+  short?: string;
   flag: string;        // flag-icons key — ISO alpha-2 ("de") or subdivision ("gb-eng")
   group: GroupLetter;
 }

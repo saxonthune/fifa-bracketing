@@ -11,7 +11,7 @@
     ["H1", "ESP"],
     ["I1", "FRA"],
     ["J1", "ARG"],
-    ["K1", "POR"],
+    ["K1", "COL"],
     ["L1", "ENG"],
 
     ["A2", "RSA"],
@@ -24,17 +24,16 @@
     ["H2", "CPV"],
     ["I2", "NOR"],
     ["J2", "AUT"],
-    ["K2", "COL"],
+    ["K2", "POR"],
     ["L2", "CRO"],
 
-    ["3rd:CE", "ECU"],
-    ["3rd:IJK", "SEN"],
-    ["3rd:AIJ", "KOR"],
-    ["3rd:GJ", "IRN"],
-    ["3rd:EIL", "GHA"],
-
+    ["3rd:B", "BOS"],
     ["3rd:D", "PAR"],
     ["3rd:F", "SWE"],
-    ["3rd:B", "BOS"]
+    ["3rd:CE", "ECU"],
+    ["3rd:GJ", "IRN"],
+    ["3rd:AIJ", "SEN"],
+    ["3rd:IJK", "DRC"],
+    ["3rd:EIL", "GHA"]
   ]
 }

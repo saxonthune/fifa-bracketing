@@ -10,7 +10,7 @@ import type { MatchId, TeamCode } from "./types";
  *  unresolved ref rendered as a human label ("Winner of QF-1", "Group A
  *  runner-up"). */
 export type ResolvedSlot =
-  | { kind: "team"; code: TeamCode; name: string; flag: string }
+  | { kind: "team"; code: TeamCode; name: string; short?: string; flag: string }
   | { kind: "pending"; label: string };
 
 export interface ResolvedMatchMeta {

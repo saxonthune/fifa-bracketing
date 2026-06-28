@@ -19,12 +19,12 @@ lives in `da/decisions.md`. This glossary is naming only — not schema, not why
 
 ## Composed views (resolver output)
 
-- **TournamentStatus** — TournamentStructure composed with CurrentStandings: the live, actual bracket state, *no picks*. What the **Tracker** renders, and the base layer of every view.
-- **GradedBracket** — a UserBracket overlaid on the TournamentStatus, each pick graded against reality (correct / wrong / pending / eliminated). What **Bracket Viewer** and **Pinned Brackets** render.
+(MISMATCH) - **TournamentStatus** — TournamentStructure composed with CurrentStandings: the live, actual bracket state, *no picks*. What the **Tracker** renders, and the base layer of every view. — No such type in code; the merged render model is `ResolvedMatch[]` (`src/lib/render-model.ts`), each `ResolvedMatch` carrying its own meta, not a content-only map keyed by MatchId.
+(MISMATCH) - **GradedBracket** — a UserBracket overlaid on the TournamentStatus, each pick graded against reality (correct / wrong / pending / eliminated). What **Bracket Viewer** and **Pinned Brackets** render. — No such type in code; grading is unbuilt, and the outcome set (5 values incl. unpicked/eliminated) is unsettled.
 
 ## Mechanisms
 
-- **resolver** — the pure function producing a TournamentStatus (no bracket given) or a GradedBracket (a UserBracket given). The rendering *logic*, separate from the visual component.
+(MISMATCH) - **resolver** — the pure function producing a TournamentStatus (no bracket given) or a GradedBracket (a UserBracket given). The rendering *logic*, separate from the visual component. — Actual code is `resolveMatches(structure, standings, registry) => ResolvedMatch[]` in `src/lib/resolve.ts`; no `TournamentStatus`/`GradedBracket` output. Also "resolve/resolver" is rejected vocabulary (to be renamed), and `CurrentStandings.resolved`/`Resolution` carry the same word.
 - **SlotRef** — how a match slot's occupant is determined: a group position (`A1`), a best-third conditional (`3rd:AIJ`), or the winner/loser of an earlier match (`W:SF-1`, `L:SF-1`).
 - **share code** — the `tag~payload` string that encodes a UserBracket for an entrant to send the maintainer (D-share-code).
 
