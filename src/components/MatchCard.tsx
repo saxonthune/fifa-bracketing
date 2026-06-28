@@ -41,7 +41,7 @@ export function MatchCard(props: MatchCardProps) {
       class="border rounded-lg shadow-sm p-1 text-base w-full flex flex-col transition-shadow hover:shadow-md"
       classList={{
         "bg-white border-gray-200": !busted(),
-        "bg-gray-200 border-gray-300 opacity-60": busted(),
+        "bg-gray-200 border-gray-300": busted(),
       }}
     >
       <MatchMeta meta={props.match.meta} />
