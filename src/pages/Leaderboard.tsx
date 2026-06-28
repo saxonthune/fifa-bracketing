@@ -36,16 +36,24 @@ async function fetchLeaderboard(): Promise<Row[]> {
 export function Leaderboard() {
   const [rows] = createResource(fetchLeaderboard);
   const navigate = useNavigate();
-  const open = (code: string) => navigate(`/viewer?code=${encodeURIComponent(code)}`);
+  const open = (code: string) =>
+    navigate(`/viewer?code=${encodeURIComponent(code)}`);
 
   return (
     <main class="flex flex-col">
       <BackButton href="/" label="Home" variant="home" />
       <h1 class="text-2xl font-['Russo_One'] mb-4">Bracket Leaderboard</h1>
-      <p class="mb-4">
+      <i class="mb-4 text-justify">
         To submit a bracket, generate a bracket code on the{" "}
-        <a href="/builder" class="text-blue-600 underline">builder page</a>, and send the code to me.
-      </p>
+        <a href="/builder" class="text-blue-600 underline">
+          builder page
+        </a>
+        , and send the code to me.
+      </i>
+      <i class="mb-4 text-justify">
+        Scoring: one point earned for every correct ro32 pick; points double
+        every round; one bonus point if you correctly guess USA final position.
+      </i>
 
       <Show when={rows.error}>
         <p class="text-red-600">{String(rows.error)}</p>
@@ -81,11 +89,15 @@ export function Leaderboard() {
                     }}
                   >
                     <td class="pr-3 tabular-nums text-gray-400">{i() + 1}</td>
-                    <td class="truncate pr-3 font-medium text-blue-600">{row.entrant}</td>
+                    <td class="truncate pr-3 font-medium text-blue-600">
+                      {row.entrant}
+                    </td>
                     <td class="truncate pr-3 text-gray-600" title={row.title}>
                       {row.title}
                     </td>
-                    <td class="text-right font-semibold tabular-nums">{row.total}</td>
+                    <td class="text-right font-semibold tabular-nums">
+                      {row.total}
+                    </td>
                   </tr>
                 )}
               </For>

@@ -17,3 +17,11 @@ preview:
 # Build and deploy dist/ to Cloudflare Pages production
 deploy:
     npm run deploy
+
+# Show knockout results openfootball has that currentStandings.json doesn't
+pull-results:
+    node scripts/pull-results.mjs
+
+# Same, but write the changes into currentStandings.json (review, then `just deploy`)
+pull-results-write:
+    node scripts/pull-results.mjs --write

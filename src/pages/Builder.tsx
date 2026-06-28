@@ -132,6 +132,9 @@ export function Builder() {
         single game to generate a bracket. Don't forget 3rd place! Send me your
         code and I'll add it to the <a href="/leaderboard" class="text-blue-600 underline">leaderboard</a>.
       </i>
+      <i class="mb-4 text-justify">
+        Scoring: one point earned for every correct ro32 pick; points double every round; one bonus point if you correctly guess USA final position.
+      </i>
       <BracketDisplay
         matches={matches()}
         structure={structure}
