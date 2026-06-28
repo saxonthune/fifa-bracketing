@@ -135,7 +135,7 @@ async function main() {
   }
 
   standings.resolved = [...groupRows, ...koRows];
-  writeFileSync(STANDINGS, `${JSON.stringify(standings, null, 2)}\n`);
+  writeFileSync(STANDINGS, serializeStandings(standings));
   console.log(`\nWrote ${koRows.length} knockout row(s) to ${STANDINGS}.`);
   if (problems.length) process.exit(1);
 }
@@ -144,6 +144,33 @@ async function main() {
  *  R32→F ordering for the written rows. */
 function structIndex(structure, id) {
   return Object.keys(structure.matches).indexOf(id);
+}
+
+/** Serialize with one [slot, code] tuple per line and a blank line between
+ *  logical groups (seeds / runners-up / 3rd-place / each knockout round).
+ *  JSON.stringify won't reproduce this hand layout; keeping it stable means a
+ *  --write diffs to only the rows that actually changed. */
+function serializeStandings(standings) {
+  const groupKey = (slot) => {
+    if (/^[A-L]1$/.test(slot)) return 'seed';
+    if (/^[A-L]2$/.test(slot)) return 'runner';
+    if (slot.startsWith('3rd:')) return 'third';
+    return slot.split('-')[0]; // knockout round (R32, R16, …)
+  };
+  const rows = standings.resolved;
+  const lines = [];
+  let prevKey = null;
+  rows.forEach(([slot, code], i) => {
+    const key = groupKey(slot);
+    if (prevKey !== null && key !== prevKey) lines.push('');
+    lines.push(`    ["${slot}", "${code}"]${i < rows.length - 1 ? ',' : ''}`);
+    prevKey = key;
+  });
+  const body = `[\n${lines.join('\n')}\n  ]`;
+  // Render the rest normally, then splice the custom array in over a numeric
+  // sentinel — preserves any sibling top-level keys without escaping headaches.
+  const head = JSON.stringify({ ...standings, resolved: 0 }, null, 2);
+  return `${head.replace('"resolved": 0', `"resolved": ${body}`)}\n`;
 }
 
 main().catch((e) => {
