@@ -130,7 +130,7 @@ export function Builder() {
       <i class="mb-4 text-justify">
         Instructions: tap a country to advance it to the next round. Pick every
         single game to generate a bracket. Don't forget 3rd place! Send me your
-        code and I'll add it to the <a href="/leaderboard">leaderboard</a>.
+        code and I'll add it to the <a href="/leaderboard" class="text-blue-600 underline">leaderboard</a>.
       </i>
       <BracketDisplay
         matches={matches()}
