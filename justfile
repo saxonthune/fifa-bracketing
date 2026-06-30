@@ -25,3 +25,7 @@ pull-results:
 # Same, but write the changes into currentStandings.json (review, then `just deploy`)
 pull-results-write:
     node scripts/pull-results.mjs --write
+
+# Cron entrypoint: pull results, then commit+push+deploy only if they changed
+auto-update:
+    scripts/auto-update.sh
