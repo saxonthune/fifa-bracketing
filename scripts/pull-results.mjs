@@ -59,14 +59,20 @@ function buildNumToId(structure) {
 }
 
 /** Decided winner of an openfootball knockout match, or null if not yet
- *  resolved. Knockouts can't end level, so a tied ft with no shootout means the
- *  match isn't finished — not a draw. */
+ *  resolved. A knockout is settled by, in order, the shootout (`p`), then the
+ *  extra-time score (`et`, the full 120-min result), then full time (`ft`). A
+ *  tied ft with no et and no shootout means the match isn't finished — knockouts
+ *  can't end level, so that's not a draw. */
 function winnerOf(match) {
   const s = match.score;
   if (!s) return null;
   const pick = (a, b) => (a > b ? match.team1 : b > a ? match.team2 : null);
   if (Array.isArray(s.p)) {
     const w = pick(s.p[0], s.p[1]);
+    if (w) return w;
+  }
+  if (Array.isArray(s.et)) {
+    const w = pick(s.et[0], s.et[1]);
     if (w) return w;
   }
   if (Array.isArray(s.ft)) return pick(s.ft[0], s.ft[1]);
