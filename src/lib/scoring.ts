@@ -37,16 +37,6 @@ export type UsaResult =
   | "runner-up"
   | "champion";
 
-export const RESULT_LABEL: Record<UsaResult, string> = {
-  ro32: "out in the Round of 32",
-  ro16: "out in the Round of 16",
-  ro8: "out in the Round of 8",
-  fourth: "4th place",
-  third: "3rd place",
-  "runner-up": "Runner-up",
-  champion: "Champion",
-};
-
 export type MatchOutcome = "correct" | "wrong" | "pending";
 
 export interface MatchScore {
