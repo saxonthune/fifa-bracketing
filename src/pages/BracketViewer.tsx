@@ -117,7 +117,7 @@ export function BracketViewer() {
       >
         {(bracket) => {
           const matches = resolveBracket(structure, standings, registry, bracket.picks);
-          const score = scoreBracket(bracket, standings);
+          const score = scoreBracket(bracket, standings, structure, registry);
           return (
             <main class="flex flex-col">
               <BackToLeaderboard />
@@ -125,6 +125,7 @@ export function BracketViewer() {
                 title={bracket.title ?? "Bracket"}
                 entrant={bracket.entrant}
                 points={score.total}
+                bonus={score.bonus}
               />
               <BracketDisplay matches={matches} structure={structure} scores={score.matches} />
             </main>

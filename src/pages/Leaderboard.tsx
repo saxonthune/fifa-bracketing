@@ -3,10 +3,18 @@ import { useNavigate } from "@solidjs/router";
 import { parsePinnedList } from "../lib/pinned";
 import { scoreBracket } from "../lib/scoring";
 import { BackButton } from "../components/BackButton";
-import type { CurrentStandings } from "../lib/types";
+import type {
+  CurrentStandings,
+  TournamentStructure,
+  TeamRegistry,
+} from "../lib/types";
 import standingsData from "../data/currentStandings.json";
+import structureData from "../data/structure.json";
+import teamsData from "../data/teams.json";
 
 const standings = standingsData as unknown as CurrentStandings;
+const structure = structureData as unknown as TournamentStructure;
+const registry = teamsData as unknown as TeamRegistry;
 
 // Unset → the bundled /pinned.json; set to the R2 URL in prod (see .env.example).
 const PINNED_URL = import.meta.env.VITE_PINNED_URL ?? "/pinned.json";
@@ -28,7 +36,7 @@ async function fetchLeaderboard(): Promise<Row[]> {
       code: e.code,
       entrant: e.bracket.entrant,
       title: e.bracket.title ?? "",
-      total: scoreBracket(e.bracket, standings).total,
+      total: scoreBracket(e.bracket, standings, structure, registry).total,
     }))
     .sort((a, b) => b.total - a.total);
 }
