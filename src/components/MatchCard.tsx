@@ -44,17 +44,15 @@ export function MatchCard(props: MatchCardProps) {
       ? () => props.onPick!(slot.code)
       : undefined;
 
-  // The pick was busted: the match resolved and the predicted winner lost.
-  const busted = () => props.score?.outcome === "wrong";
+  // The busted pick: the match resolved and this slot is the predicted winner
+  // that lost. Flagged with a red "+0" so losses are easy to spot.
+  const bustedFor = (slot: ResolvedSlot): boolean =>
+    props.score?.outcome === "wrong" &&
+    slot.kind === "team" &&
+    slot.code === props.score.pick;
 
   return (
-    <div
-      class="border rounded-lg shadow-sm p-1 text-base w-full flex flex-col transition-shadow hover:shadow-md"
-      classList={{
-        "bg-white border-gray-200": !busted(),
-        "bg-gray-200 border-gray-300": busted(),
-      }}
-    >
+    <div class="border border-gray-200 bg-white rounded-lg shadow-sm p-1 text-base w-full flex flex-col transition-shadow hover:shadow-md">
       <MatchMeta meta={props.match.meta} />
       <TeamSlot
         slot={props.match.slots[0]}
@@ -62,6 +60,7 @@ export function MatchCard(props: MatchCardProps) {
         isLoser={isLoser(props.match.slots[0])}
         points={pointsFor(props.match.slots[0])}
         bonus={bonusFor(props.match.slots[0])}
+        busted={bustedFor(props.match.slots[0])}
         onPick={pickFor(props.match.slots[0])}
       />
       <TeamSlot
@@ -70,6 +69,7 @@ export function MatchCard(props: MatchCardProps) {
         isLoser={isLoser(props.match.slots[1])}
         points={pointsFor(props.match.slots[1])}
         bonus={bonusFor(props.match.slots[1])}
+        busted={bustedFor(props.match.slots[1])}
         onPick={pickFor(props.match.slots[1])}
       />
     </div>

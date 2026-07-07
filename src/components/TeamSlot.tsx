@@ -11,6 +11,8 @@ interface TeamSlotProps {
   /** USA-finish bonus on this slot, shown as a "+N" badge at full opacity even
    *  when the slot is the (dimmed) loser of its match. */
   bonus?: number;
+  /** This slot is the predicted winner that lost — marked with a red "+0". */
+  busted?: boolean;
   onPick?: () => void;
 }
 
@@ -18,7 +20,10 @@ export function TeamSlot(props: TeamSlotProps) {
   const content = () => {
     const slot = props.slot;
     if (slot.kind === "team") {
-      const stateClass = props.isWinner
+      // A busted pick gets a red box mirroring the green winner highlight.
+      const stateClass = props.busted
+        ? "rounded bg-red-50 px-1 font-bold text-red-700 ring-1 ring-red-600/20"
+        : props.isWinner
         ? "rounded bg-green-50 px-1 font-bold text-green-700 ring-1 ring-green-600/20"
         : props.isLoser
         ? "opacity-40"
@@ -35,6 +40,11 @@ export function TeamSlot(props: TeamSlotProps) {
             <Show when={props.points != null}>
               <span class="ml-auto shrink-0 rounded-full bg-green-100 px-1.5 text-sm font-bold text-green-700">
                 +{props.points}
+              </span>
+            </Show>
+            <Show when={props.busted}>
+              <span class="ml-auto shrink-0 rounded-full bg-red-100 px-1.5 text-sm font-bold text-red-700">
+                +0
               </span>
             </Show>
           </span>
