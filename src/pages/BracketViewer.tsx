@@ -124,10 +124,14 @@ export function BracketViewer() {
               <BracketSummary
                 title={bracket.title ?? "Bracket"}
                 entrant={bracket.entrant}
-                points={score.total}
+                score={score}
+              />
+              <BracketDisplay
+                matches={matches}
+                structure={structure}
+                scores={score.matches}
                 bonus={score.bonus}
               />
-              <BracketDisplay matches={matches} structure={structure} scores={score.matches} />
             </main>
           );
         }}

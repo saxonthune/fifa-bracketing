@@ -51,6 +51,7 @@ export interface BonusScore {
   team: TeamCode;
   predicted?: UsaResult; // how far the bracket sends the team, if determinable
   actual?: UsaResult; // how far the team really went, once its run has ended
+  atMatch?: MatchId; // the bracket match where the team's run ends — where the grid marks the bonus
   outcome: MatchOutcome;
   points: number; // BONUS_POINTS when correct, else 0
 }
@@ -77,27 +78,38 @@ function roundOf(matchId: string): RoundId | undefined {
 function usaResult(
   matches: ResolvedMatch[],
   team: TeamCode,
-): { settled: boolean; result?: UsaResult } {
+): { settled: boolean; result?: UsaResult; atMatch?: MatchId } {
   const byId = new Map(matches.map((m) => [m.id, m]));
   const contains = (m: ResolvedMatch | undefined) =>
     m?.slots.some((s) => s.kind === "team" && s.code === team) ?? false;
 
   const final = byId.get("F-1" as MatchId);
   if (final?.winner !== undefined && contains(final)) {
-    return { settled: true, result: final.winner === team ? "champion" : "runner-up" };
+    return {
+      settled: true,
+      result: final.winner === team ? "champion" : "runner-up",
+      atMatch: final.id,
+    };
   }
   const third = byId.get("TP-1" as MatchId);
   if (third?.winner !== undefined && contains(third)) {
-    return { settled: true, result: third.winner === team ? "third" : "fourth" };
+    return {
+      settled: true,
+      result: third.winner === team ? "third" : "fourth",
+      atMatch: third.id,
+    };
   }
 
-  const lostIn = (round: RoundId): boolean =>
-    matches.some(
+  const lostIn = (round: RoundId): ResolvedMatch | undefined =>
+    matches.find(
       (m) => roundOf(m.id) === round && m.winner !== undefined && m.winner !== team && contains(m),
     );
-  if (lostIn("QF")) return { settled: true, result: "ro8" };
-  if (lostIn("R16")) return { settled: true, result: "ro16" };
-  if (lostIn("R32")) return { settled: true, result: "ro32" };
+  const qf = lostIn("QF");
+  if (qf) return { settled: true, result: "ro8", atMatch: qf.id };
+  const r16 = lostIn("R16");
+  if (r16) return { settled: true, result: "ro16", atMatch: r16.id };
+  const r32 = lostIn("R32");
+  if (r32) return { settled: true, result: "ro32", atMatch: r32.id };
 
   return { settled: false };
 }
@@ -111,23 +123,25 @@ function scoreBonus(
   structure: TournamentStructure,
   registry: TeamRegistry,
 ): BonusScore {
-  const predicted = usaResult(
+  const pred = usaResult(
     resolveBracket(structure, results, registry, bracket.picks),
     BONUS_TEAM,
-  ).result;
+  );
+  const predicted = pred.result;
   const { settled, result: actual } = usaResult(
     resolveMatches(structure, results, registry),
     BONUS_TEAM,
   );
 
   if (!settled) {
-    return { team: BONUS_TEAM, predicted, outcome: "pending", points: 0 };
+    return { team: BONUS_TEAM, predicted, atMatch: pred.atMatch, outcome: "pending", points: 0 };
   }
   const correct = predicted !== undefined && predicted === actual;
   return {
     team: BONUS_TEAM,
     predicted,
     actual,
+    atMatch: pred.atMatch,
     outcome: correct ? "correct" : "wrong",
     points: correct ? BONUS_POINTS : 0,
   };

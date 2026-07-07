@@ -1,12 +1,13 @@
 import type { ResolvedMatch, ResolvedSlot } from "../lib/render-model";
 import type { TeamCode } from "../lib/types";
-import type { MatchScore } from "../lib/scoring";
+import type { MatchScore, BonusScore } from "../lib/scoring";
 import { MatchMeta } from "./MatchMeta";
 import { TeamSlot } from "./TeamSlot";
 
 interface MatchCardProps {
   match: ResolvedMatch;
   score?: MatchScore;
+  bonus?: BonusScore;
   onPick?: (team: TeamCode) => void;
 }
 
@@ -26,6 +27,16 @@ export function MatchCard(props: MatchCardProps) {
     slot.kind === "team" &&
     slot.code === props.score.pick
       ? props.score.points
+      : undefined;
+
+  // The USA-finish bonus lands on USA's slot at the match where its run ends,
+  // and only once the bonus is actually earned.
+  const bonusFor = (slot: ResolvedSlot): number | undefined =>
+    props.bonus?.outcome === "correct" &&
+    props.bonus.atMatch === props.match.id &&
+    slot.kind === "team" &&
+    slot.code === props.bonus.team
+      ? props.bonus.points
       : undefined;
 
   const pickFor = (slot: ResolvedSlot): (() => void) | undefined =>
@@ -50,6 +61,7 @@ export function MatchCard(props: MatchCardProps) {
         isWinner={isWinner(props.match.slots[0])}
         isLoser={isLoser(props.match.slots[0])}
         points={pointsFor(props.match.slots[0])}
+        bonus={bonusFor(props.match.slots[0])}
         onPick={pickFor(props.match.slots[0])}
       />
       <TeamSlot
@@ -57,6 +69,7 @@ export function MatchCard(props: MatchCardProps) {
         isWinner={isWinner(props.match.slots[1])}
         isLoser={isLoser(props.match.slots[1])}
         points={pointsFor(props.match.slots[1])}
+        bonus={bonusFor(props.match.slots[1])}
         onPick={pickFor(props.match.slots[1])}
       />
     </div>

@@ -1,6 +1,6 @@
 import { For, createSignal, onMount, onCleanup } from "solid-js";
 import type { ResolvedMatch } from "../lib/render-model";
-import type { MatchScore } from "../lib/scoring";
+import type { MatchScore, BonusScore } from "../lib/scoring";
 import type { MatchId, TeamCode, TournamentStructure } from "../lib/types";
 import { bracketLayout, type BracketMode } from "../lib/layout";
 import { MatchCard } from "./MatchCard";
@@ -30,6 +30,8 @@ interface BracketDisplayProps {
   structure: TournamentStructure;
   /** Per-match scores (Viewer); when present a card shows a "+N" on a correct pick. */
   scores?: Record<MatchId, MatchScore>;
+  /** Host-nation bonus (Viewer); when earned, marks "+N" on USA's slot at its exit match. */
+  bonus?: BonusScore;
   onPick?: (matchId: MatchId, team: TeamCode) => void;
 }
 
@@ -120,6 +122,7 @@ export function BracketDisplay(props: BracketDisplayProps) {
                     <MatchCard
                       match={match}
                       score={props.scores?.[match.id]}
+                      bonus={props.bonus}
                       onPick={
                         props.onPick != null
                           ? (team) => props.onPick!(match.id, team)

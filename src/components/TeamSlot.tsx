@@ -8,6 +8,9 @@ interface TeamSlotProps {
   /** Points earned for this pick, shown as a bold "+N"; absent unless the
    *  pick actually won (Viewer scoring). */
   points?: number;
+  /** USA-finish bonus on this slot, shown as a "+N" badge at full opacity even
+   *  when the slot is the (dimmed) loser of its match. */
+  bonus?: number;
   onPick?: () => void;
 }
 
@@ -21,16 +24,23 @@ export function TeamSlot(props: TeamSlotProps) {
         ? "opacity-40"
         : "";
       return (
-        <span class={`flex items-center gap-2 min-w-0 ${stateClass}`}>
-          <img
-            src={`/flags/${slot.flag}.svg`}
-            alt={slot.name}
-            class="w-6 h-4 shrink-0 object-cover ring-1 ring-black/10"
-          />
-          <span class="min-w-0 truncate">{slot.short ?? slot.name}</span>
-          <Show when={props.points != null}>
-            <span class="ml-auto shrink-0 rounded-full bg-green-100 px-1.5 text-sm font-bold text-green-700">
-              +{props.points}
+        <span class="flex w-full items-center gap-2 min-w-0">
+          <span class={`flex items-center gap-2 min-w-0 ${stateClass}`}>
+            <img
+              src={`/flags/${slot.flag}.svg`}
+              alt={slot.name}
+              class="w-6 h-4 shrink-0 object-cover ring-1 ring-black/10"
+            />
+            <span class="min-w-0 truncate">{slot.short ?? slot.name}</span>
+            <Show when={props.points != null}>
+              <span class="ml-auto shrink-0 rounded-full bg-green-100 px-1.5 text-sm font-bold text-green-700">
+                +{props.points}
+              </span>
+            </Show>
+          </span>
+          <Show when={props.bonus != null}>
+            <span class="ml-auto shrink-0 rounded-full bg-blue-100 px-1.5 text-sm font-bold text-blue-700">
+              +{props.bonus}
             </span>
           </Show>
         </span>
