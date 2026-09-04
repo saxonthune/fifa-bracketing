@@ -125,7 +125,7 @@ records the choice and its status.
   fan_out: high
   reversible: true
   status: confirmed
-  choice: "the contract is two surfaces only — src/lib/types.ts (field shapes, canonical) + da/decisions.md (rationale); doc02 glossary holds the names. The per-shape contract doc tree (old doc02.01–05) was deleted as redundant bloat (PAINPOINTS.MD 2026-06-27)."
+  choice: "the contract is two surfaces only — src/lib/types.ts (field shapes, canonical) + commentary/decisions.md (rationale); doc02 glossary holds the names. The per-shape contract doc tree (old doc02.01–05) was deleted as redundant bloat (PAINPOINTS.MD 2026-06-27)."
 
 - id: D-bracket-title
   decision: does a bracket carry a display title

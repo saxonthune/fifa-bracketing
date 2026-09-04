@@ -1,31 +1,29 @@
 #!/usr/bin/env bash
-# Cron entrypoint: pull WC knockout results, and only if they changed, commit +
-# push + deploy. Runs headless, so it deliberately avoids the two things a cron
-# session can't reach: the GNOME keyring (gh's token) and an ssh-agent. Push goes
-# over the passphraseless ed25519 key via an explicit SSH url; wrangler reads its
-# file-based OAuth token. See `just auto-update` to run it by hand.
+# Cron-friendly example: pull World Cup knockout results and, only when they
+# change, commit, push, and deploy. Configure non-interactive Git and Wrangler
+# authentication separately before scheduling this script.
 set -uo pipefail
 
-REPO=/home/saxon/code/github/saxonthune/fifa-bracketing
-# nvm node isn't on cron's PATH; pin it (update on a node major upgrade).
-export PATH="/home/saxon/.nvm/versions/node/v22.21.0/bin:/usr/bin:/bin"
-PUSH_URL=git@github.com:saxonthune/fifa-bracketing.git
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+REPO=$(dirname "$SCRIPT_DIR")
+PUSH_REMOTE=${FIFA_BRACKET_PUSH_REMOTE:-origin}
 STANDINGS=src/data/currentStandings.json
-LOG_DIR=/home/saxon/.local/state/fifa-bracketing
-LOG=$LOG_DIR/cron.log
+LOG_DIR=${FIFA_BRACKET_LOG_DIR:-"$REPO/logs"}
+LOG=$LOG_DIR/auto-update.log
 
 mkdir -p "$LOG_DIR"
 exec >>"$LOG" 2>&1
-# One run at a time — a deploy can outlast the 10-minute interval.
-exec 9>"$LOG_DIR/lock"
+
+# One run at a time—a deploy can outlast the schedule interval.
+exec 9>"$LOG_DIR/auto-update.lock"
 flock -n 9 || { echo "$(date -Is) skip: previous run still going"; exit 0; }
 
-cd "$REPO" || { echo "$(date -Is) FATAL: cannot cd $REPO"; exit 1; }
+cd "$REPO" || { echo "$(date -Is) FATAL: cannot enter repository"; exit 1; }
 echo "$(date -Is) --- run start ---"
 
 node scripts/pull-results.mjs --write
 pull_rc=$?
-[ $pull_rc -ne 0 ] && echo "$(date -Is) ⚠ NEEDS ATTENTION: pull-results exited $pull_rc (unmapped winner? check ALIASES)"
+[ "$pull_rc" -ne 0 ] && echo "$(date -Is) NEEDS ATTENTION: pull-results exited $pull_rc"
 
 if git diff --quiet -- "$STANDINGS"; then
   echo "$(date -Is) no change; done"
@@ -33,8 +31,8 @@ if git diff --quiet -- "$STANDINGS"; then
 fi
 
 branch=$(git rev-parse --abbrev-ref HEAD)
-echo "$(date -Is) standings changed on $branch — committing + deploying"
+echo "$(date -Is) standings changed on $branch—committing and deploying"
 git commit -q -m "auto-pull WC results" -- "$STANDINGS" || { echo "$(date -Is) FATAL: commit failed"; exit 1; }
-git push -q "$PUSH_URL" "HEAD:$branch" || { echo "$(date -Is) FATAL: push failed"; exit 1; }
+git push -q "$PUSH_REMOTE" "HEAD:$branch" || { echo "$(date -Is) FATAL: push failed"; exit 1; }
 npm run deploy || { echo "$(date -Is) FATAL: deploy failed"; exit 1; }
-echo "$(date -Is) deployed."
+echo "$(date -Is) deployed"

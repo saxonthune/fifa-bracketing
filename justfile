@@ -26,6 +26,6 @@ pull-results:
 pull-results-write:
     node scripts/pull-results.mjs --write
 
-# Cron entrypoint: pull results, then commit+push+deploy only if they changed
+# Cron-friendly example: pull results, then commit, push, and deploy if changed
 auto-update:
     scripts/auto-update.sh

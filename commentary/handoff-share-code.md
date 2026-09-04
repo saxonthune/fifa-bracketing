@@ -39,6 +39,6 @@ contract: how a bracket serializes into the code an entrant sends the maintainer
 ## Ownership / collision rules
 
 - Touch ONLY `doc02.03`. Do NOT edit other contracts, `doc01`, or anything under
-  `da/` (decisions/tasks/questions are owned by the other thread).
+  `commentary/` (decisions/tasks/questions are owned by the other thread).
 - When done, report your decisions back in chat as a short list so the other
-  thread folds them into `da/decisions.md`. Don't write that file yourself.
+  thread folds them into `commentary/decisions.md`. Don't write that file yourself.

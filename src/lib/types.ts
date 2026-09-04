@@ -1,6 +1,6 @@
 // Contract types — the canonical serialized shapes the whole app shares.
 // This file is the single source of truth for field shapes. Names live in the
-// glossary (.rhidoc/02-glossary.md); rationale lives in da/decisions.md (D-*).
+// glossary (.rhidoc/02-glossary.md); rationale lives in commentary/decisions.md (D-*).
 // Shape lives here; why lives there.
 
 // ─── Atoms ───────────────────────────────────────────────────────────────────

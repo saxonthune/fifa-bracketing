@@ -44,19 +44,19 @@ when orienting:
 
 ## Painpoint log (`PAIN:` shorthand)
 
-`PAINPOINTS.MD` records moments where the agent broke from my interpretation of
-`DA-PROCESS.MD`. **The agent appends to it only when I tell it to — never on its
+`commentary/PAINPOINTS.MD` records moments where the agent broke from my interpretation of
+`commentary/DA-PROCESS.MD`. **The agent appends to it only when I tell it to — never on its
 own.**
 
 Shorthand: when a message begins with `PAIN:`, the rest of that message is a new
-painpoint. Append it to `PAINPOINTS.MD` as a dated entry, expanding it into the
+painpoint. Append it to `commentary/PAINPOINTS.MD` as a dated entry, expanding it into the
 three-part shape already used there (what happened / what I wanted / which DA
 principle it cut against) — transduce what I said, don't editorialize. Only that
 explicit trigger adds an entry.
 
 ## Implementing work — todo-task, not the T- queue
 
-`da/tasks.md` (the `T-*` entries) is a **planning** artifact only — it tracks what's
+`commentary/tasks.md` (the `T-*` entries) is a **planning** artifact only — it tracks what's
 ready vs blocked and on which decision. It is **not** how work gets implemented.
 
 To implement, go through `/todo-task`: `create` a draft from the relevant `T-*`

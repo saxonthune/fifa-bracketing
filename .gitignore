@@ -144,3 +144,5 @@ vite.config.ts.timestamp-*
 
 .temp/
 
+# Local todo-task workflow state and artifacts
+.todo-tasks/
