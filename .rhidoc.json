@@ -1,0 +1,10 @@
+{
+  "root": ".rhidoc/",
+  "title": "fifa-bracketing",
+  "description": "",
+  "externalRefPaths": [
+    "CLAUDE.md",
+    ".claude/skills/**/*.md",
+    ".cursor/**/*.md"
+  ]
+}

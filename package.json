@@ -1,0 +1,27 @@
+{
+  "name": "fifa-bracketing",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && wrangler pages deploy dist --project-name=fifa-bracketing --branch=main --commit-dirty=true",
+    "bracket-data": "node scripts/bracket-data.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@solidjs/router": "^0.15.3",
+    "solid-js": "^1.9.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "flag-icons": "^7.5.0",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.1",
+    "vite-plugin-solid": "^2.11.6",
+    "vitest": "^3.2.4"
+  }
+}
