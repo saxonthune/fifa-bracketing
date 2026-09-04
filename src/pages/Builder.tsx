@@ -1,6 +1,6 @@
 import { createSignal, Show } from "solid-js";
 import { resolveBracket } from "../lib/resolve";
-import { prunePicks } from "../lib/builder";
+import { prunePicks, randomizePicks } from "../lib/builder";
 import { encodeBracket, CURRENT_BRACKET_V } from "../lib/shareCode";
 import { BracketDisplay } from "../components/BracketDisplay";
 import { BackButton } from "../components/BackButton";
@@ -62,6 +62,10 @@ export function Builder() {
         [matchId]: team,
       }),
     );
+  };
+
+  const randomize = () => {
+    setPicks(randomizePicks(structure, standings, registry));
   };
 
   const openModal = () => {
@@ -135,6 +139,14 @@ export function Builder() {
       <i class="mb-4 text-justify">
         Scoring: one point earned for every correct ro32 pick; points double every round; one bonus point if you correctly guess USA final position.
       </i>
+      <div class="mb-6 flex justify-center">
+        <button
+          class="rounded bg-gray-200 px-4 py-2 font-semibold text-gray-800 hover:bg-gray-300"
+          onClick={randomize}
+        >
+          Randomize Bracket
+        </button>
+      </div>
       <BracketDisplay
         matches={matches()}
         structure={structure}

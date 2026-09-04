@@ -5,6 +5,7 @@ import type {
   Picks,
   RoundId,
   MatchId,
+  TeamCode,
 } from "./types";
 import { ROUND_IDS } from "./types";
 import { resolveBracket } from "./resolve";
@@ -59,4 +60,32 @@ export function illegalPicks(
 ): MatchId[] {
   const kept = prunePicks(structure, standings, registry, picks);
   return (Object.keys(picks) as MatchId[]).filter((id) => kept[id] !== picks[id]);
+}
+
+/**
+ * Build a complete, internally consistent bracket by choosing one of the two
+ * teams in every match. Picks from each round feed the next, so later choices
+ * are made only after their participants can be resolved.
+ */
+export function randomizePicks(
+  structure: TournamentStructure,
+  standings: CurrentStandings,
+  registry: TeamRegistry,
+  random: () => number = Math.random,
+): Picks {
+  const picks: Picks = {};
+
+  for (const round of ROUND_IDS) {
+    const resolved = resolveBracket(structure, standings, registry, picks);
+    for (const match of resolved) {
+      if (roundOf(match.id) !== round) continue;
+      const teams = match.slots.flatMap((slot) =>
+        slot.kind === "team" ? [slot.code] : [],
+      ) as TeamCode[];
+      if (teams.length !== 2) continue;
+      picks[match.id] = teams[random() < 0.5 ? 0 : 1];
+    }
+  }
+
+  return picks;
 }

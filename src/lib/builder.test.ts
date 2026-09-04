@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { prunePicks, illegalPicks } from "./builder";
+import { prunePicks, illegalPicks, randomizePicks } from "./builder";
 import { parsePinnedList } from "./pinned";
 import type {
   TournamentStructure,
@@ -72,6 +72,26 @@ describe("illegalPicks", () => {
   it("flags a downstream pick stranded by its upstream", () => {
     const picks: Picks = { "R32-1": "RSA", "R16-2": "CAN" };
     expect(illegalPicks(structure, standings, registry, picks)).toEqual(["R16-2"]);
+  });
+});
+
+describe("randomizePicks", () => {
+  it("fills every match with a legal pick", () => {
+    const realStandings = standingsData as unknown as CurrentStandings;
+    const realRegistry = teamsData as unknown as TeamRegistry;
+    const picks = randomizePicks(structure, realStandings, realRegistry, () => 0);
+
+    expect(Object.keys(picks)).toHaveLength(Object.keys(structure.matches).length);
+    expect(illegalPicks(structure, realStandings, realRegistry, picks)).toEqual([]);
+  });
+
+  it("can choose either side of each match", () => {
+    const realStandings = standingsData as unknown as CurrentStandings;
+    const realRegistry = teamsData as unknown as TeamRegistry;
+    const first = randomizePicks(structure, realStandings, realRegistry, () => 0);
+    const second = randomizePicks(structure, realStandings, realRegistry, () => 0.99);
+
+    expect(first["R32-1"]).not.toBe(second["R32-1"]);
   });
 });
 

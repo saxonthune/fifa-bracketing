@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "vite build && wrangler pages deploy dist --project-name=fifa-bracketing --branch=main --commit-dirty=true",
+    "bracket-data": "node scripts/bracket-data.mjs",
     "test": "vitest run"
   },
   "dependencies": {

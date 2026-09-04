@@ -21,6 +21,14 @@ const cards = [
 export function Home() {
   return (
     <main class="flex flex-col gap-4">
+      <div class="rounded-lg border border-gray-300 bg-gray-100 p-4 text-gray-700">
+        <div class="font-semibold">Site Archived</div>
+        <div class="mt-1">
+          The FIFA™ World Cup has ended. This site is now archived; the names of
+          bracket authors have been anonymized (besides myself and the AI). Thank you
+          for playing.
+        </div>
+      </div>
       {cards.map((card) => (
         <A
           href={card.href}
